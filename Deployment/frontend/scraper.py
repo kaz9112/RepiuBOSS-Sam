@@ -9,13 +9,15 @@ def scrape(link):
         page = browser.new_page()
         page.set_default_timeout(300000)
         page.goto(URL)
+        page.click('div > label:nth-child(5) > div > div > span')
+        page.click('div > label:nth-child(4) > div > div > span')
+        page.click('div > label:nth-child(3) > div > div > span')
         
         page.wait_for_timeout(2000) # settings for scraping model default = 2000, for webapp default = 3000
 
         review_list = []
 
-        loop_stat = True
-        for i in range(10):
+        for i in range(5):
             review_raw = page.query_selector_all('div:nth-child(1) > p:nth-child(4) > span:nth-child(1)')
             for x in review_raw:
                 replaced = x.inner_text().replace("\n", "")
