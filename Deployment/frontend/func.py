@@ -3,6 +3,11 @@ import string
 from nltk.tokenize import word_tokenize
 import pandas as pd
 import numpy as np
+from nltk.corpus import stopwords
+import re
+import string
+from nltk.tokenize import word_tokenize
+from nltk.stem.porter import *
 
 # A Function to use in the dataframe
 kamus = pd.read_csv('kamus.txt', sep="	", header=None,names=['slang', 'fix'])
@@ -59,6 +64,52 @@ def TextProcess(text):
 
   text = np.array(text)
 
+  
+  return text
+
+def TextProcess2(text):
+
+  # 1. Change all text to Lowercase
+  text = text.lower()
+  
+  # 2. Removing Mentions
+  text = re.sub("@[A-Za-z0-9_]+", " ", text)
+  
+  # 3. Removing Hashtags
+  text = re.sub("#[A-Za-z0-9_]+", " ", text)
+  
+  # 4. Removing \n
+  text = re.sub(r"\\n", " ",text)
+  
+  # 5. Removing Whitespaces
+  text = text.strip()
+
+  # 6. Removing Links
+  text = re.sub(r"http\S+", " ", text)
+  text = re.sub(r"www.\S+", " ", text)
+
+  # 7. Removing non text characters such as Emojis, Mathematical symbols
+  text = re.sub("[^A-Za-z\s']", " ", text)
+
+  # 8. Removing RT
+  text = re.sub("rt", " ",text)
+
+  # 9. Tokenization
+  tokens = word_tokenize(text)
+  for x in range(len(tokens)):
+    for i in range(len(slang_list)):
+      if tokens[x] == slang_list[i]:
+        tokens[x] = fix_list[i]
+      else:
+        pass
+
+  # 10. Removing Stopwords
+  # stopwords_en = list(set(stopwords.words('english')))
+  text = ' '.join([word for word in tokens])
+  
+  # 11. Stemming
+  stemmer = PorterStemmer()
+  text = stemmer.stem(text)
   
   return text
 
