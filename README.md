@@ -6,3 +6,6 @@ url model: https://huggingface.co/spaces/kaz9112/RepiuBOSS
 
 
 url ppt: https://docs.google.com/presentation/d/13lPk0qfR4Px-cOFtlpF_mTz6ActXsaZcaTsbDMWgbvc/edit?usp=sharing
+
+
+url Demo Video: https://youtu.be/MHCQxDIz3eI
